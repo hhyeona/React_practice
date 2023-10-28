@@ -33,6 +33,12 @@ export default class App extends Component{
     }
   ]
 
+  handleClick = (id) => {
+    // x 를 누르면 지워지는 거라서 나머지 (지워지지 않은 부분들이 )가 콘솔창에 보이게 됨.
+    let newTodoData = this.todoData.filter(data => data.id !== id)
+    console.log("newTodoData", newTodoData)
+  }
+
   render(){
     return(
       <div className="container">
@@ -46,7 +52,8 @@ export default class App extends Component{
           따라서 unique 한 값이 없다면 (data, index) 에 index 를 넣어줌. but,index와 내용이 고정값이 아니라 그저 index가 0부터 시작되는거라 비추천.   */}
            <input type="checkbox" defaultChecked={false} />
             {data.title}
-           <button style={this.btnStyle}>x</button>
+            {/* 클릭 이벤트 발생 시 함수 호출하기 */}
+           <button style={this.btnStyle} onClick={()=> this.handleClick(data.id)}>x</button>
            </div>
 
         ) )}
