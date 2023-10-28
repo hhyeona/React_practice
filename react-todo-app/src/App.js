@@ -1,11 +1,19 @@
-import './App.css';
+// react class 컴포넌트 만들기
+import React, {Component} from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div>
-      
-    </div>
-  );
+export default class App extends Component{
+  render(){
+    return(
+      <div className="container">
+        <div className="todoBlock">
+        <div className="title">
+          <h1>할 일 목록</h1>
+
+        </div>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default App;
