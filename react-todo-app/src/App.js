@@ -42,7 +42,8 @@ export default class App extends Component{
         </div>
         {this.todoData.map((data) => (
           <div style={this.getStyle()} key={data.id} >  
-          {/* key 속성에 unique 한 값 넣어주기.    */}
+          {/* key 속성에 unique 한 값 넣어주기. because of 리액트 돔에서 key 값으로 변경된 사항을 파악하고 그 부분만 실제 돔에 적용할 수 있기 때문. 
+          따라서 unique 한 값이 없다면 (data, index) 에 index 를 넣어줌. but,index와 내용이 고정값이 아니라 그저 index가 0부터 시작되는거라 비추천.   */}
            <input type="checkbox" defaultChecked={false} />
             {data.title}
            <button style={this.btnStyle}>x</button>
