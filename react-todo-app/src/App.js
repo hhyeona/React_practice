@@ -3,6 +3,23 @@ import React, {Component} from "react";
 import "./App.css";
 
 export default class App extends Component{
+
+  state = {
+    todoData: [
+      {
+        id: "1",
+        title: "공부하기",
+        completed: true,
+      },
+      {
+        id: "2",
+        title:"청소하기",
+        completed: false,
+      }
+    ]
+  
+  }
+
   btnStyle = {
     color: "#fff",
     border: "none",
@@ -20,23 +37,13 @@ export default class App extends Component{
     }
   }
 
-  todoData = [
-    {
-      id: "1",
-      title: "공부하기",
-      completed: true,
-    },
-    {
-      id: "2",
-      title:"청소하기",
-      completed: false,
-    }
-  ]
 
   handleClick = (id) => {
     // x 를 누르면 지워지는 거라서 나머지 (지워지지 않은 부분들이 )가 콘솔창에 보이게 됨.
-    let newTodoData = this.todoData.filter(data => data.id !== id)
-    console.log("newTodoData", newTodoData)
+    let newTodoData = this.state.todoData.filter(data => data.id !== id)
+    // console.log("newTodoData", newTodoData)
+    this.setState( {todoData: newTodoData});
+    
   }
 
   render(){
@@ -46,7 +53,7 @@ export default class App extends Component{
         <div className="title">
           <h1>할 일 목록</h1>
         </div>
-        {this.todoData.map((data) => (
+        {this.state.todoData.map((data) => (
           <div style={this.getStyle()} key={data.id} >  
           {/* key 속성에 unique 한 값 넣어주기. because of 리액트 돔에서 key 값으로 변경된 사항을 파악하고 그 부분만 실제 돔에 적용할 수 있기 때문. 
           따라서 unique 한 값이 없다면 (data, index) 에 index 를 넣어줌. but,index와 내용이 고정값이 아니라 그저 index가 0부터 시작되는거라 비추천.   */}
