@@ -9,7 +9,7 @@ export default class App extends Component{
       {
         id: "1",
         title: "공부하기",
-        completed: true,
+        completed: false,
       },
       {
         id: "2",
@@ -19,7 +19,7 @@ export default class App extends Component{
     ],
     // 입력으로 인한 이벤트 발생 시 그 값(value)을 state 에 저장해야 함.  value={this.state.value} 값.
     value: "",
-  }
+  };
 
   btnStyle = {
     color: "#fff",
@@ -28,15 +28,15 @@ export default class App extends Component{
     borderRadius: "50%",
     cursor: "pointer",
     float: "right",
-  }
+  };
  
-  getStyle = () => {
+  getStyle = (completed) => {
     return{
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: "none",
+      textDecoration:  completed ? "line-through" : "none",
     }
-  }
+  };
 
 
   handleClick = (id) => {
@@ -45,12 +45,12 @@ export default class App extends Component{
     // console.log("newTodoData", newTodoData)
     this.setState( {todoData: newTodoData});
     
-  }
+  };
 
   handleChange = (e) => {
     // console.log('e', e.target.value);  : 입력한 value 값이 나옴.
     this.setState({value: e.target.value});
-  }
+  };
 
   handleSubmit = (e) => {
     // form 안에 input 을 전송할 때 페이지 리로드 되는 걸 막아줌.
@@ -64,8 +64,19 @@ export default class App extends Component{
       completed: false
     };
 
-    // 원래 있던 할 일에 새로운 할 일 추가해주기. (전개연산자)
-    this.setState({todoData: [...this.state.todoData, newTodo]});
+    // 원래 있던 할 일에 새로운 할 일 추가해주기. (전개연산자) / 그 후, 입력 창에 value 빈 값으로 세팅
+    this.setState({todoData: [...this.state.todoData, newTodo], value: ""});
+  };
+
+  handleCompletChange = (id) => {
+    let newTodoData = this.state.todoData.map((data) => {
+      if (data.id === id) {
+        data.completed = !data.completed;
+      }
+      return data;
+    })
+
+    this.setState({ todoData: newTodoData});
   }
 
   render(){
@@ -76,10 +87,13 @@ export default class App extends Component{
           <h1>할 일 목록</h1>
         </div>
         {this.state.todoData.map((data) => (
-          <div style={this.getStyle()} key={data.id} >  
+          <div style={this.getStyle(data.completed)} key={data.id} >  
           {/* key 속성에 unique 한 값 넣어주기. because of 리액트 돔에서 key 값으로 변경된 사항을 파악하고 그 부분만 실제 돔에 적용할 수 있기 때문. 
           따라서 unique 한 값이 없다면 (data, index) 에 index 를 넣어줌. but,index와 내용이 고정값이 아니라 그저 index가 0부터 시작되는거라 비추천.   */}
-           <input type="checkbox" defaultChecked={false} />
+           <input 
+           type="checkbox" 
+           onChange={() => this.handleCompletChange(data.id)}
+           defaultChecked={false} />
             {data.title}
             {/* 클릭 이벤트 발생 시 함수 호출하기 */}
            <button style={this.btnStyle} onClick={()=> this.handleClick(data.id)}>x</button>
