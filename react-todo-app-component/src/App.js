@@ -2,6 +2,7 @@
 import React, {useState} from "react";
 import "./App.css";
 import List from "./components/List";
+import Form from "./components/Form"
 
 // export default class App extends Component{
 export default function App() {
@@ -22,34 +23,28 @@ export default function App() {
   //   value: "",
   // };
 
+  // 필요한 컴포넌트 함수에 props 로 넘겨줌.
 const [todoData, setTodoData] = useState([]);
 const [value, setValue] = useState("");
 
+// 다른 변수도 있어서 props 로 넘겨줌.
+const handleSubmit = (e) => {
+  // form 안에 input 을 전송할 때 페이지 리로드 되는 걸 막아줌.
+  e.preventDefault();
 
-  const handleChange = (e) => {
-    // console.log('e', e.target.value);  : 입력한 value 값이 나옴.
-    // this.setState({value: e.target.value});
-    setValue(e.target.value)
+  // 새로운 할 일 데이터 
+  let newTodo = {
+    // id 는 unique 한 값으로 주기 위해 현재 시간.
+    id: Date.now(),
+    title: value,
+    completed: false
   };
 
-  const handleSubmit = (e) => {
-    // form 안에 input 을 전송할 때 페이지 리로드 되는 걸 막아줌.
-    e.preventDefault();
-
-    // 새로운 할 일 데이터 
-    let newTodo = {
-      // id 는 unique 한 값으로 주기 위해 현재 시간.
-      id: Date.now(),
-      title: value,
-      completed: false
-    };
-
-    // 원래 있던 할 일에 새로운 할 일 추가해주기. (전개연산자) / 그 후, 입력 창에 value 빈 값으로 세팅
-    // this.setState({todoData: [...todoData, newTodo], value: ""});
-    setTodoData(prev => [...prev, newTodo]);
-    setValue("");
-  };
-
+  // 원래 있던 할 일에 새로운 할 일 추가해주기. (전개연산자) / 그 후, 입력 창에 value 빈 값으로 세팅
+  // this.setState({todoData: [...todoData, newTodo], value: ""});
+  setTodoData(prev => [...prev, newTodo]);
+  setValue("");
+};
 
     return(
       <div className="container">
@@ -59,21 +54,7 @@ const [value, setValue] = useState("");
         </div>
         
         <List todoData={todoData} setTodoData={setTodoData}/>
-        <form style={{ display: "flex"}} onSubmit={handleSubmit}>
-          <input 
-          type="text" 
-          name="value" 
-          style={{flex:'10', padding: '5px'}} 
-          placeholder="해야 할 일을 입력하세요."
-          value={value}
-          onChange={handleChange}/>
-          {/* 입력버튼 클릭 시  목록에 추가하고 && 입력란에 있던 글씨 지워야 함. 위에 onSubmit*/}
-          <input 
-          type="submit" 
-          value="입력" 
-          className="btn" 
-          style={{flex: '1'}} />
-        </form>
+      <Form handleSubmit={handleSubmit} value={value} setValue={setValue}></Form>
       </div>
       </div>
     )
