@@ -40,6 +40,11 @@ const handleClick = useCallback((id) => {
   setTodoData(newTodoData)
   
 }, [todoData]);
+
+// 한번에 목록 지우기 함수
+const handleRemoveClick = () => {
+  setTodoData([])
+}
     return(
       /* tailwind 적용하기 */
       // container : 아이템 가운데 정렬 및 배경 색
@@ -49,6 +54,7 @@ const handleClick = useCallback((id) => {
           {/* title: 타이틀과 deleteall 사이 간격, bottom-margin  */}
         <div className="flex justify-between mb-3">
           <h1>할 일 목록</h1>
+          <button onClick={handleRemoveClick}>Delete All</button>
         </div>
         <Lists todoData={todoData} setTodoData={setTodoData} handleClick={handleClick}/>
       <Form handleSubmit={handleSubmit} value={value} setValue={setValue}></Form>
