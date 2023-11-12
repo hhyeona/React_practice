@@ -47,12 +47,15 @@ const handleSubmit = (e) => {
 };
 
     return(
-      <div className="container">
-        <div className="todoBlock">
-        <div className="title">
+      /* tailwind 적용하기 */
+      // container : 아이템 가운데 정렬 및 배경 색
+      <div className="flex items-center justify-center w-screen h-screen bg-blue-100" >
+        {/* todoBlock: 내부 패딩, 마진, 배경하얀색, 라운드, 섀도우, 반응형 */}
+        <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
+          {/* title: 타이틀과 deleteall 사이 간격, bottom-margin  */}
+        <div className="flex justify-between mb-3">
           <h1>할 일 목록</h1>
         </div>
-        
         <List todoData={todoData} setTodoData={setTodoData}/>
       <Form handleSubmit={handleSubmit} value={value} setValue={setValue}></Form>
       </div>

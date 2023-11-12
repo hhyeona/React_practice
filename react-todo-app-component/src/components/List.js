@@ -2,23 +2,24 @@
 import React from 'react'
 
 export default function List({todoData, setTodoData}) {
-    
-  const btnStyle = {
-    color: "#fff",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right",
-  };
+  
+  /* tailwind 적용하기 */
+  // const btnStyle = {
+  //   color: "#fff",
+  //   border: "none",
+  //   padding: "5px 9px",
+  //   borderRadius: "50%",
+  //   cursor: "pointer",
+  //   float: "right",
+  // };
  
-  const getStyle = (completed) => {
-    return{
-      padding: "10px",
-      borderBottom: "1px #ccc dotted",
-      textDecoration:  completed ? "line-through" : "none",
-    }
-  };
+  // const getStyle = (completed) => {
+  //   return{
+  //     padding: "10px",
+  //     borderBottom: "1px #ccc dotted",
+  //     textDecoration:  completed ? "line-through" : "none",
+  //   }
+  // };
 
   const handleCompletChange = (id) => {
     let newTodoData = todoData.map((data) => {
@@ -43,18 +44,28 @@ export default function List({todoData, setTodoData}) {
   return (
     <div>
         {todoData.map((data) => (
-        <div style={getStyle(data.completed)} key={data.id} >  
+          // tailwind 전: <div style={getStyle(data.completed)} key={data.id} >  
+        <div  key={data.id} >  
         {/* key 속성에 unique 한 값 넣어주기. because of 리액트 돔에서 key 값으로 변경된 사항을 파악하고 그 부분만 실제 돔에 적용할 수 있기 때문. 
         따라서 unique 한 값이 없다면 (data, index) 에 index 를 넣어줌. but,index와 내용이 고정값이 아니라 그저 index가 0부터 시작되는거라 비추천.   */}
+        {/* 리스트 전체 tailwind css */}
+        <div className='flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-100 border rounded'>
+          {/* 체크박스와 타이틀 묶어서 tailwind css */}
+          <div className='item-center'>
          <input 
          type="checkbox" 
          onChange={() => handleCompletChange(data.id)}
          defaultChecked={false} />
-          {data.title}
+         <span className={data.completed ? 'line-through': undefined}> {data.title}</span> 
+          </div>
           {/* 클릭 이벤트 발생 시 함수 호출하기 */}
-         <button style={btnStyle} onClick={()=> handleClick(data.id)}>x</button>
+          {/*  tailwind 전: <button style={btnStyle} onClick={()=> handleClick(data.id)}>x</button> */}
+          {/* x 버튼 div */}
+          <div className='items-center'>
+         <button className='px-4 py-2 float-right' onClick={()=> handleClick(data.id)}>x</button>
+          </div>
          </div>
-
+         </div>
       ) )}
       </div>
   )
