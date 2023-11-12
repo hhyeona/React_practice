@@ -4,7 +4,9 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import List from './List';
 
 // eslint-disable-next-line react/display-name
-const Lists = React.memo(({todoData, setTodoData}) => {
+const Lists = React.memo(({todoData, setTodoData, handleClick}) => {
+ console.log("Lists Comonent")
+
   
   /* tailwind 적용하기 */
   // const btnStyle = {
@@ -41,6 +43,7 @@ const Lists = React.memo(({todoData, setTodoData}) => {
     // 원하는 자리에 reorderedItem 을 insert 해줌.
     newTodoData.splice(results.destination.inex, 0, reorderedItem);
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
   }
 
   return (
@@ -64,7 +67,8 @@ const Lists = React.memo(({todoData, setTodoData}) => {
             todoData={todoData}
             setTodoData={setTodoData}
             provided={provided}
-            snapshot={snapshot}>
+            snapshot={snapshot}
+            handleClick={handleClick}>
               
             </List>
          )}

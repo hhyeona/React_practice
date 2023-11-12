@@ -16,6 +16,8 @@ const List = React.memo(({id, title, completed, todoData, setTodoData, provided,
     })
 
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
+
   }
 
   // title 수정 할 때 state 변경
@@ -34,6 +36,7 @@ setEditedTitle(e.target.value)
       return data;
     })
     setTodoData(newTodoData)
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
     setIsEditing(false)
 
   }

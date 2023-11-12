@@ -4,12 +4,14 @@ import "./App.css";
 import Lists from "./components/Lists";
 import Form from "./components/Form"
 
+const initialTodoData = localStorage.getItem("todoData") ? JSON.parse(localStorage.getItem("todoData")) : [];
+
 // export default class App extends Component{
 export default function App() {
  console.log("App Comonent")
 
   // 필요한 컴포넌트 함수에 props 로 넘겨줌.
-const [todoData, setTodoData] = useState([]);
+const [todoData, setTodoData] = useState(initialTodoData);
 const [value, setValue] = useState("");
 
 // 다른 변수도 있어서 props 로 넘겨줌.
@@ -28,6 +30,7 @@ const handleSubmit = (e) => {
   // 원래 있던 할 일에 새로운 할 일 추가해주기. (전개연산자) / 그 후, 입력 창에 value 빈 값으로 세팅
   // this.setState({todoData: [...todoData, newTodo], value: ""});
   setTodoData(prev => [...prev, newTodo]);
+  localStorage.setItem('todoData', JSON.stringify([...todoData, newTodo]))
   setValue("");
 };
 
@@ -38,12 +41,14 @@ const handleClick = useCallback((id) => {
   // console.log("newTodoData", newTodoData)
   // this.setState( {todoData: newTodoData});
   setTodoData(newTodoData)
+  localStorage.setItem('todoData', JSON.stringify(newTodoData))
   
 }, [todoData]);
 
 // 한번에 목록 지우기 함수
 const handleRemoveClick = () => {
-  setTodoData([])
+  setTodoData([]);
+  localStorage.setItem('todoData', JSON.stringify([]))
 }
     return(
       /* tailwind 적용하기 */
