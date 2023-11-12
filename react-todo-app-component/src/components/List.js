@@ -1,7 +1,7 @@
 import React from 'react'
 
 // eslint-disable-next-line react/display-name
-const List = React.memo(({id, title, completed, todoData, setTodoData, provided, snapshot}) => {
+const List = React.memo(({id, title, completed, todoData, setTodoData, provided, snapshot, handleClick}) => {
   const handleCompletChange = (id) => {
     let newTodoData = todoData.map((data) => {
       if (data.id === id) {
@@ -14,14 +14,6 @@ const List = React.memo(({id, title, completed, todoData, setTodoData, provided,
   }
 
   
-  const handleClick = (id) => {
-    // x 를 누르면 지워지는 거라서 나머지 (지워지지 않은 부분들이 )가 콘솔창에 보이게 됨.
-    let newTodoData = todoData.filter(data => data.id !== id)
-    // console.log("newTodoData", newTodoData)
-    // this.setState( {todoData: newTodoData});
-    setTodoData(newTodoData)
-    
-  };
 
   return (
     <div 

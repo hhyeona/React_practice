@@ -1,27 +1,12 @@
 // react functional component 로  hooks 사용해서 최적화 하기.
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import "./App.css";
 import Lists from "./components/Lists";
 import Form from "./components/Form"
 
 // export default class App extends Component{
 export default function App() {
-  // state = {
-  //   todoData: [
-  //     {
-  //       id: "1",
-  //       title: "공부하기",
-  //       completed: false,
-  //     },
-  //     {
-  //       id: "2",
-  //       title:"청소하기",
-  //       completed: false,
-  //     }
-  //   ],
-  //   // 입력으로 인한 이벤트 발생 시 그 값(value)을 state 에 저장해야 함.  value={this.state.value} 값.
-  //   value: "",
-  // };
+ console.log("App Comonent")
 
   // 필요한 컴포넌트 함수에 props 로 넘겨줌.
 const [todoData, setTodoData] = useState([]);
@@ -46,6 +31,15 @@ const handleSubmit = (e) => {
   setValue("");
 };
 
+// useCallback 을 통해 재렌더링 최적화 하기. 
+const handleClick = useCallback((id) => {
+  // x 를 누르면 지워지는 거라서 나머지 (지워지지 않은 부분들이 )가 콘솔창에 보이게 됨.
+  let newTodoData = todoData.filter(data => data.id !== id)
+  // console.log("newTodoData", newTodoData)
+  // this.setState( {todoData: newTodoData});
+  setTodoData(newTodoData)
+  
+}, [todoData]);
     return(
       /* tailwind 적용하기 */
       // container : 아이템 가운데 정렬 및 배경 색
@@ -56,7 +50,7 @@ const handleSubmit = (e) => {
         <div className="flex justify-between mb-3">
           <h1>할 일 목록</h1>
         </div>
-        <Lists todoData={todoData} setTodoData={setTodoData}/>
+        <Lists todoData={todoData} setTodoData={setTodoData} handleClick={handleClick}/>
       <Form handleSubmit={handleSubmit} value={value} setValue={setValue}></Form>
       </div>
       </div>

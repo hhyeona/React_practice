@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Form({ handleSubmit, value, setValue }) {
+  console.log("Form Comonent")
 
   const handleChange = (e) => {
     // console.log('e', e.target.value);  : 입력한 value 값이 나옴.
