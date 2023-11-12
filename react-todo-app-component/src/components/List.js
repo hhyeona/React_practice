@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function List({id, title, completed, todoData, setTodoData, provided, snapshot}) {
+// eslint-disable-next-line react/display-name
+const List = React.memo(({id, title, completed, todoData, setTodoData, provided, snapshot}) => {
   const handleCompletChange = (id) => {
     let newTodoData = todoData.map((data) => {
       if (data.id === id) {
@@ -21,7 +22,7 @@ export default function List({id, title, completed, todoData, setTodoData, provi
     setTodoData(newTodoData)
     
   };
-  
+
   return (
     <div 
           key={id}
@@ -42,3 +43,5 @@ export default function List({id, title, completed, todoData, setTodoData, provi
          </div>
   )
 }
+);
+export default List;
